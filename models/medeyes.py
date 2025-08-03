@@ -212,6 +212,12 @@ class MedEyes(nn.Module):
 
         Available tools:
         - gaze: Focus on specific image regions {"name": "gaze", "coordinate": [x1, y1, x2, y2]}
+
+        Example:
+        <reasoning>Need to examine the right lung field for signs of pneumothorax</reasoning>
+        <action>{"name": "gaze", "coordinate": [200, 100, 350, 250]}</action>
+        <feedback>Visible pleural line with absence of lung markings peripherally</feedback>
+        <answer>Yes, there is evidence of pneumothorax in the right lung</answer>
         """
 
     def _parse_tool_calls(self, response: str) -> List[Dict]:
