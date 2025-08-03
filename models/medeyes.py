@@ -204,10 +204,11 @@ class MedEyes(nn.Module):
         """Get system prompt for medical VQA"""
         return """You are an expert medical AI assistant capable of analyzing medical images. 
         When answering questions:
-        1. First think about what regions of the image are relevant (<reasoning>)
+        1. Think about what regions of the image are relevant (<reasoning>)
         2. Use the gaze tool to focus on specific regions (<action>)
-        3. Analyze the visual evidence carefully
-        4. Provide a clear, medically accurate answer (<answer>)
+        3. Analyze the visual evidence from the tool (<feedback>)
+        4. Repeat steps 1-3 as needed for thorough examination
+        5. Provide a clear, medically accurate answer (<answer>)
 
         Available tools:
         - gaze: Focus on specific image regions {"name": "gaze", "coordinate": [x1, y1, x2, y2]}
@@ -292,7 +293,7 @@ class MedEyes(nn.Module):
                 return True
 
         # Terminate if max length reached
-        if len(reasoning_chain) >= self.config['cvs']['max_trajectory_length'] * 2:
+        if len(reasoning_chain) >= self.config['cvs']['max_trajectory_length'] * 3:
             return True
 
         return False
