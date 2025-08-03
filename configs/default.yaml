@@ -1,0 +1,66 @@
+# Model Configuration
+model:
+  name: "MedEyes"
+  backbone: "Qwen2.5-VL-3B"
+  input_size: [336, 336]
+  patch_size: 14
+  medplib:
+    checkpoint: "./pretrained/medplib_checkpoint.pth"
+    enable_segmentation: true
+
+# GRN Configuration
+grn:
+  n_regions: 5
+  scanning_prompt: "Please locate all abnormal regions in the image <SEG>"
+  drilling_prompt: "Please analyze the abnormality in region <region>{}</region> <SEG>"
+  confidence_threshold: 0.85
+  mode_transition_delta: 0.15
+  stability_epsilon: 1e-6
+
+# CVS Configuration
+cvs:
+  nucleus_p: 0.9
+  max_trajectory_length: 4
+  n_expert_trajectories: 6
+  termination_confidence: 0.85
+  temperature: 1.0
+
+# Training Configuration
+training:
+  batch_size: 98
+  num_epochs: 3
+  learning_rate: 1e-6
+  warmup_steps: 500
+  gradient_clip: 1.0
+
+  # GRPO Configuration
+  grpo:
+    n_rollouts: 8
+    n_on_policy: 8
+    n_off_policy: 8
+    kl_coefficient: 0.0
+    clip_ratio: 0.2
+
+  # Reward Weights
+  rewards:
+    accuracy: 0.7
+    grammar: 0.2
+    diversity: 0.1
+    iou_threshold: 0.5
+
+# Dataset Configuration
+dataset:
+  name: "vqa-rad"
+  data_root: "./data"
+  image_size: 336
+  max_question_length: 256
+  max_answer_length: 512
+  num_workers: 4
+
+# Logging Configuration
+logging:
+  use_wandb: true
+  project_name: "MedEyes"
+  log_interval: 100
+  save_interval: 1000
+  eval_interval: 500

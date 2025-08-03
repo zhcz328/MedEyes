@@ -1,0 +1,42 @@
+# SLAKE Dataset Configuration
+dataset:
+  name: "slake"
+  data_root: "./data/slake"
+
+  # Data splits
+  splits:
+    train: "train.json"
+    val: "val.json"
+    test: "test.json"
+
+  # Image settings
+  image_dir: "imgs"
+  image_size: 336
+  image_format: "jpg"
+
+  # Question/Answer settings
+  max_question_length: 256
+  max_answer_length: 128
+
+  # Languages
+  languages: ["en", "zh"]
+  default_language: "en"
+
+  # Preprocessing
+  preprocessing:
+    normalize: true
+    augmentation:
+      enabled: true
+      rotation_range: 10
+      width_shift_range: 0.05
+      height_shift_range: 0.05
+      zoom_range: 0.05
+      horizontal_flip: true
+
+  # Dataset specific
+  modalities: ["xray", "ct", "mri"]
+  question_types: ["plane", "modality", "organ", "abnormality", "color", "shape", "size", "quantity"]
+  knowledge_types: ["organ", "knowledge graph", "abnormality"]
+
+  # Sampling
+  balanced_sampling: true

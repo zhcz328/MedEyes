@@ -1,0 +1,38 @@
+# VQA-RAD Dataset Configuration
+dataset:
+  name: "vqa-rad"
+  data_root: "./data/vqa-rad"
+
+  # Data splits
+  splits:
+    train: "train.json"
+    val: "val.json"
+    test: "test.json"
+
+  # Image settings
+  image_dir: "images"
+  image_size: 336
+  image_format: "jpg"
+
+  # Question/Answer settings
+  max_question_length: 256
+  max_answer_length: 128
+
+  # Preprocessing
+  preprocessing:
+    normalize: true
+    augmentation:
+      enabled: true
+      rotation_range: 15
+      width_shift_range: 0.1
+      height_shift_range: 0.1
+      zoom_range: 0.1
+      horizontal_flip: true
+
+  # Dataset specific
+  modalities: ["xray", "ct", "mri"]
+  question_types: ["yes/no", "what", "where", "how many", "which"]
+
+  # Sampling
+  balanced_sampling: true
+  sample_weights: "inverse_frequency"

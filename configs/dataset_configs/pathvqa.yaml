@@ -1,0 +1,48 @@
+# PathVQA Dataset Configuration
+dataset:
+  name: "pathvqa"
+  data_root: "./data/pathvqa"
+
+  # Data splits
+  splits:
+    train: "train_vqa.json"
+    val: "val_vqa.json"
+    test: "test_vqa.json"
+
+  # Image settings
+  image_dir: "images"
+  image_size: 336
+  image_format: "jpg"
+
+  # Question/Answer settings
+  max_question_length: 256
+  max_answer_length: 256  # Longer answers for pathology
+
+  # Preprocessing
+  preprocessing:
+    normalize: true
+    color_normalization: "reinhard"  # Pathology-specific
+    augmentation:
+      enabled: true
+      rotation_range: 20
+      width_shift_range: 0.15
+      height_shift_range: 0.15
+      zoom_range: 0.15
+      horizontal_flip: true
+      vertical_flip: true  # Valid for pathology
+      color_jitter:
+        brightness: 0.2
+        contrast: 0.2
+        saturation: 0.2
+        hue: 0.1
+
+  # Dataset specific
+  modalities: ["pathology", "microscopy"]
+  magnifications: ["4x", "10x", "20x", "40x"]
+  stain_types: ["H&E", "IHC", "special"]
+  question_types: ["yes/no", "what", "where", "how many", "describe"]
+
+  # Pathology-specific settings
+  patch_size: 512
+  overlap: 0.25
+  min_tissue_ratio: 0.5
