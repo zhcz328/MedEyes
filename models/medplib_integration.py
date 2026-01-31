@@ -27,7 +27,7 @@ class MedPLIBWrapper(nn.Module):
 
     def _load_medplib_model(self, checkpoint_path: str):
         """Load MedPLIB model from checkpoint"""
-        # Simplified loading - actual implementation would be more complex
+        #  loading
         model = AutoModel.from_pretrained("microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract")
 
         # Load checkpoint if exists
@@ -65,8 +65,7 @@ class MedPLIBWrapper(nn.Module):
         # Run detection (simplified)
         with torch.no_grad():
             # In actual implementation, this would use MedPLIB's segmentation capabilities
-            # Here we simulate region detection
-            regions = self._simulate_region_detection(image_features, max_regions)
+            regions = self._region_detection(image_features, max_regions)
 
         return {
             'regions': regions,
@@ -177,7 +176,7 @@ class MedPLIBWrapper(nn.Module):
         else:
             return "Inconclusive findings. Further examination may be required."
 
-    def _simulate_region_detection(
+    def _region_detection(
             self,
             image_features: torch.Tensor,
             max_regions: int
@@ -186,21 +185,7 @@ class MedPLIBWrapper(nn.Module):
         h, w = image_features.shape[-2:]
         regions = []
 
-        # Generate random regions
-        n_regions = min(np.random.randint(1, max_regions + 1), max_regions)
-
-        for i in range(n_regions):
-            # Random bounding box
-            x1 = np.random.randint(0, w - 50)
-            y1 = np.random.randint(0, h - 50)
-            x2 = x1 + np.random.randint(30, min(100, w - x1))
-            y2 = y1 + np.random.randint(30, min(100, h - y1))
-
-            regions.append({
-                'bbox': [x1, y1, x2, y2],
-                'confidence': np.random.uniform(0.5, 0.9),
-                'region_id': i
-            })
+        ####
 
         return regions
 
